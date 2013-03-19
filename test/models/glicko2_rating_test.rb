@@ -26,4 +26,16 @@ describe Glicko2Rating do
       Glicko2Rating.for_game(@game).first.position.must_be :>, 0
     end
   end
+
+  describe "#expected_fractional_score" do
+    before do
+      @tournament = create(:tournament)
+      @rating1 = create(:rating, :tournament => @tournament)
+      @rating2 = create(:rating, :tournament => @tournament)
+    end
+
+    it "must calculate the expected fractional score between ranks" do
+      @rating1.expected_fractional_score(@rating2).must_equal 0.5
+    end
+  end
 end

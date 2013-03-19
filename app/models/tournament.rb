@@ -48,6 +48,12 @@ class Tournament < ActiveRecord::Base
     users.where(:users => {:id => user}).present?
   end
 
+  def find_best_matches(rating)
+    glicko2_ratings.reject{|match| match == rating}.sort_by do |match|
+      (rating.expected_fractional_score(match) - 0.5).abs
+    end
+  end
+
   private
 
   def maximum_allowed

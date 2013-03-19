@@ -35,4 +35,12 @@ class Glicko2Rating < ActiveRecord::Base
   def position
     read_attribute(:position).try(:to_i)
   end
+
+  def glicko2_player
+    @glicko2_player ||= Glicko2::Player.from_obj(self)
+  end
+
+  def expected_fractional_score(other)
+    glicko2_player.e(other.glicko2_player)
+  end
 end

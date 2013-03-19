@@ -110,4 +110,16 @@ describe Tournament do
       @tournament.has_user?(@users.last).must_equal false
     end
   end
+
+  describe "#find_best_matches" do
+    before do
+      @tournament = create(:tournament)
+      @rating1 = create(:rating, :tournament => @tournament)
+      @rating2 = create(:rating, :tournament => @tournament)
+    end
+
+    it "must do something" do
+      @tournament.find_best_matches(@rating1).must_equal [@rating2]
+    end
+  end
 end
